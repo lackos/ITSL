@@ -14,8 +14,10 @@
    |a)  | Regression      |500| 3 |     Y     |     N      |
    |b)  | Classification  |20 | 13|     N     |     Y      |
    |c)  | Regression      |52 | 4 |     N     |     Y      |		  
-3. a) The variance, bias, test error, trianing error and Bayes error are plotted below.
-<img src='../Images/Chapter2/flexibility_plots.png' width='150'> 
+3. 
+a) The variance, bias, test error, trianing error and Bayes error are plotted below.
+<img src='../Images/Chapter2/flexibility_plots.png' width='600'> 
+
    b) **Variance**
 
       **Bias**
@@ -27,11 +29,15 @@
       **Bayes Error**
 	Fundamental error of the model also known as irreducible error.  
 
-4. a) **Classification Problem**
+4.
+ a) **Classification Problem**
+
    b) **Regression Problem**
+
    c) **Cluster Analysis**
 
-5. | Flexible                       |       Non-Flexible         |
+5.
+ | Flexible                       |       Non-Flexible         |
    |--------------------------------|----------------------------|
    | Poor for inference             | Good for inference         |
    | High variance                  | Low variance               |
