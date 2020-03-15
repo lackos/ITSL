@@ -35,4 +35,8 @@ Due to the statistically significant p-values of TV and radio advertising we can
  could change the order of magnitude of an estimator be any degree with a change
  of units.
 
-3d. 
+4.
+
+5.
+
+6. 

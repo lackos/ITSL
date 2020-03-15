@@ -157,42 +157,28 @@ def diagnostic_plot(smf_model, num_max_res=3, filename=None):
 
 def main():
     ###
-    ### Question 10
+    ### Question 15
     ###
 
-    ## Import carseats.csv from DATA_DIR
-    carseats_df = pd.read_csv(os.path.join(DATA_DIR, 'carseats.csv'))
-    carseats_df.drop('Unnamed: 0', axis=1, inplace=True)
-    print(carseats_df)
+        # object_methods = [method_name for method_name in dir(results)
+        #               if callable(getattr(results, method_name))]
+        # print(object_methods)
 
-    ### a) Fit the multiple linear regression
-    print("Question 10a) regression results")
-    results = smf.ols("Sales ~ Price + Urban + US" , data=carseats_df).fit()
-    print(results.summary())
-    print('\n\n')
+    ## Import boston.csv from DATA_DIR
+    boston_df = pd.read_csv(os.path.join(DATA_DIR, 'boston.csv'))
+    # print(boston_df)
+    y = boston_df['CRIM']
+    X = boston_df.drop('CRIM', axis=1)
+    # X = sm.add_constant(X)
 
-    ### b) Urban and US are qualitative
-
-    ### c)
-
-    ### d) Urban
-
-    ### e)
-    print("Question 10e) regression results")
-    results = smf.ols("Sales ~ Price + US" , data=carseats_df).fit()
-    print(results.summary())
-
-    ### f)
-
-    ### g)
-
-    ### h)
-    # diagnostic_plot(results, num_max_res=3, filename='q10_diagnostic_plots.png')
-    diagnostic_plot(results, num_max_res=3, filename=None)
-    ## No evidence of outliers or high leverage points in the diagnostic plots
-
-
-
+    ### a) Create a single variable linear regression for each variable with the crim predictor. Plot each relationship
+    for var in X.columns:
+        x = X[var]
+        ax = sns.regplot(x=x, y=y)
+        x = sm.add_constant(x)
+        results = sm.OLS(y, x).fit()
+        print("The p-value for " + var + " is: " + str(round(results.pvalues.loc[var], 5)))        
+        plt.show()
 
 
 
