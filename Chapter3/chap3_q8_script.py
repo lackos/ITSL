@@ -32,7 +32,7 @@ def residual_plot(smf_model, num_max_res=3, ax=None):
     plt.rcParams["figure.figsize"] = (8,7)
     ax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')
     ax.plot(smoothed[:,0],smoothed[:,1],color = 'r')
-    ax.set_ylabel('Residuals')
+        ax.set_ylabel('Residuals')
     ax.set_xlabel('Fitted Values')
     ax.set_title('Residuals vs. Fitted')
     ax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)
