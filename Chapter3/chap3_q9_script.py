@@ -154,6 +154,134 @@ def diagnostic_plot(smf_model, num_max_res=3, filename=None):
     else:
         plt.savefig(os.path.join(IMAGE_DIR,filename), format='png', dpi=500)
 
+def part_a():
+    ## Import auto.csv from DATA_DIR
+    auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
+
+
+    ### a) Scatter plot matrix of auto dataset
+    ## 'horsepower' contains some non-numeric rows which need to be removed
+    ## First set all non-numeric rows to 'nan' then remove them
+    auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
+    auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
+    auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
+
+    ## Plot the scatter matrix
+    ax = sns.pairplot(auto_df)
+    plt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95)
+    ax.fig.suptitle('Auto Quantitative Scatter Matrix', fontsize=35)
+    plt.savefig(os.path.join(IMAGE_DIR,'auto_scatter_matrix.png'), format='png', dpi=250)
+    plt.show()
+    plt.close()
+
+def part_b():
+    ## Import auto.csv from DATA_DIR
+    auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
+
+    ## 'horsepower' contains some non-numeric rows which need to be removed
+    ## First set all non-numeric rows to 'nan' then remove them
+    auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
+    auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
+    auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
+
+    ### b) Correlation matrix of auto dataset.
+    corr = auto_df.corr()
+    sns.set(font_scale=1.25)
+    hm = sns.heatmap(corr, cbar=True, annot=True, square=True, fmt='.2f', annot_kws={'size': 10})
+    plt.show()
+    plt.savefig(os.path.join(IMAGE_DIR,'q9_auto_corr_matrix.png'), format='png', dpi=500)
+
+def part_c():
+    ## Import auto.csv from DATA_DIR
+    auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
+
+
+    ### a) Scatter plot matrix of auto dataset
+    ## 'horsepower' contains some non-numeric rows which need to be removed
+    ## First set all non-numeric rows to 'nan' then remove them
+    auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
+    auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
+    auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
+
+    ## Drop the 'name' column
+    auto_df.drop('name', axis=1, inplace=True)
+
+    ## Set the target and predictors
+    X = auto_df.drop('mpg', axis=1)
+    y = auto_df['mpg']
+
+    ## Reshape the columns in the required dimensions for sklearn
+    length = X.values.shape[0]
+    y = y.values.reshape(length, 1)
+
+    lm = LinearRegression()
+    lm.fit(X,y)
+    print(lm.coef_)
+
+    ## Doe the same with statsmodels
+    feature_string = ' + '.join(X.columns)
+    results = smf.ols("mpg ~ " + feature_string, data=auto_df).fit()
+    print(results.summary())
+
+def part_d():
+    ## Import auto.csv from DATA_DIR
+    auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
+
+
+    ### a) Scatter plot matrix of auto dataset
+    ## 'horsepower' contains some non-numeric rows which need to be removed
+    ## First set all non-numeric rows to 'nan' then remove them
+    auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
+    auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
+    auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
+
+    ### c) Perform a multiple linear regression with mpg as the target and all other variable as prodictors
+    ## Drop the 'name' column
+    auto_df.drop('name', axis=1, inplace=True)
+
+    ## Set the target and predictors
+    X = auto_df.drop('mpg', axis=1)
+    y = auto_df['mpg']
+
+    feature_string = ' + '.join(X.columns)
+    results = smf.ols("mpg ~ " + feature_string, data=auto_df).fit()
+    diagnostic_plot(results, num_max_res=3)
+
+def part_e():
+    ## Import auto.csv from DATA_DIR
+    auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
+
+
+    ### a) Scatter plot matrix of auto dataset
+    ## 'horsepower' contains some non-numeric rows which need to be removed
+    ## First set all non-numeric rows to 'nan' then remove them
+    auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
+    auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
+    auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
+
+    ### c) Perform a multiple linear regression with mpg as the target and all other variable as prodictors
+    ## Drop the 'name' column
+    auto_df.drop('name', axis=1, inplace=True)
+
+    ## Set the target and predictors
+    X = auto_df.drop('mpg', axis=1)
+    y = auto_df['mpg']
+
+    ## Create interaction effects
+    feature_names = X.columns
+    poly = PolynomialFeatures(interaction_only=True,include_bias = False)
+    X = poly.fit_transform(X)
+
+    ## Create new linear model with new features
+    ## Recreate dataframe out of preporcessed numpy array
+    column_names = poly.get_feature_names(input_features=feature_names)
+    columns = [name.replace(' ', '_') for name in column_names]
+    X = pd.DataFrame(data=X, columns=columns)
+    full_df = X.join(auto_df['mpg'])
+    feature_string = ' + '.join(columns)
+    formula = "mpg ~ " + feature_string
+    results = smf.ols("mpg ~ " + feature_string, data=full_df).fit()
+    print(results.summary())
 
 def main():
     ###
@@ -170,20 +298,6 @@ def main():
     auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
     auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
     auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
-
-    ## Plot the scatter matrix
-    # ax = sns.pairplot(auto_df)
-    # plt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95)
-    # ax.fig.suptitle('Auto Quantitative Scatter Matrix', fontsize=35)
-    # plt.savefig(os.path.join(IMAGE_DIR,'auto_scatter_matrix.png'), format='png', dpi=250)
-    # plt.show()
-
-    ### b) Correlation matrix of auto dataset.
-    corr = auto_df.corr()
-    sns.set(font_scale=1.25)
-    hm = sns.heatmap(corr, cbar=True, annot=True, square=True, fmt='.2f', annot_kws={'size': 10})
-    # plt.show()
-    # print(corr)
 
     ### c) Perform a multiple linear regression with mpg as the target and all other variable as prodictors
     ## Drop the 'name' column
@@ -205,9 +319,6 @@ def main():
     feature_string = ' + '.join(X.columns)
     results = smf.ols("mpg ~ " + feature_string, data=auto_df).fit()
     print(results.summary())
-
-    ## d) Plot the diagnostic plots for the multiple regression
-    # diagnostic_plot(results, num_max_res=3)
 
     ## e) Create interaction effects
     feature_names = X.columns

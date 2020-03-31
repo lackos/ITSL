@@ -17,6 +17,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'Data')
 IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter3')
 
+###
+### Question 8
+###
+
 def residual_plot(smf_model, num_max_res=3, ax=None):
     ###
     ### https://towardsdatascience.com/going-from-r-to-python-linear-regression-diagnostic-plots-144d1c4aa5a
@@ -32,7 +36,7 @@ def residual_plot(smf_model, num_max_res=3, ax=None):
     plt.rcParams["figure.figsize"] = (8,7)
     ax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')
     ax.plot(smoothed[:,0],smoothed[:,1],color = 'r')
-        ax.set_ylabel('Residuals')
+    ax.set_ylabel('Residuals')
     ax.set_xlabel('Fitted Values')
     ax.set_title('Residuals vs. Fitted')
     ax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)
@@ -142,7 +146,7 @@ def diagnostic_plot(smf_model, num_max_res=3, filename=None):
     plt.rc('axes', labelsize=10)
     plt.rc('axes', titlesize=13)
     plt.rc('legend', fontsize=8)
-    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2)
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
     residual_plot(smf_model, num_max_res, ax = ax1)
     qq_plot(smf_model, num_max_res, ax = ax2)
     scale_location_plot(smf_model, num_max_res, ax = ax3)
@@ -153,14 +157,81 @@ def diagnostic_plot(smf_model, num_max_res=3, filename=None):
         plt.savefig(os.path.join(IMAGE_DIR,filename), format='png', dpi=500)
 
 
-def main():
-    ###
-    ### Question 8
-    ###
-
+def part_a():
     ## Import auto.csv from DATA_DIR
     auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
 
+    ### a) fit a linear regression of horsepower to mpg.
+    ## 'horsepower' contains some non-numeric rows which need to be removed
+    ## First set all non-numeric rows to 'nan' then remove them
+    auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
+    auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
+    auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
+
+    ## Set the target and predictors
+    X = auto_df['horsepower']
+    y = auto_df['mpg']
+
+    ## Reshape the columns in the required dimensions for sklearn
+    length = X.values.shape[0]
+    X = X.values.reshape(length, 1)
+    y = y.values.reshape(length, 1)
+
+
+    ## Initiate the linear regressor and fit it to data using sklearn
+    regr = LinearRegression()
+    regr.fit(X, y)
+    pred_y = regr.predict(X)
+
+    ## Output statistical summary using statsmodels
+    results = smf.ols('mpg ~ horsepower', data=auto_df).fit()
+    print(results.summary())
+
+def part_b():
+    auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
+    auto_df['horsepower'] = pd.to_numeric(auto_df['horsepower'], errors='coerce')
+    auto_df['mpg'] = pd.to_numeric(auto_df['mpg'], errors='coerce')
+    auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True)
+
+    ## Set the target and predictors
+    X = auto_df['horsepower']
+    y = auto_df['mpg']
+
+    ## Reshape the columns in the required dimensions for sklearn
+    length = X.values.shape[0]
+    X = X.values.reshape(length, 1)
+    y = y.values.reshape(length, 1)
+
+
+    ## Initiate the linear regressor and fit it to data using sklearn
+    regr = LinearRegression()
+    regr.fit(X, y)
+    pred_y = regr.predict(X)
+
+    ### Plot the linear model
+    ## Instantiate the figure and axes
+    fig, ax = plt.subplots(figsize=(15,15))
+
+    ## Scatter plotwith fitted line
+    plt.scatter(X, y, color='grey')
+    line, = ax.plot(X, pred_y, color='red', linewidth=2)
+    plt.rc('legend', fontsize=8)
+
+    plt.title("Linear model of mpg vs horsepower", fontsize=30)
+    ax.set_xlabel('Horsepower', fontsize=25)
+    ax.set_ylabel('mpg', fontsize=25)
+    line.set_label("y = " + str(round(float(regr.intercept_), 2)) + " " + str(round(float(regr.coef_), 2)) + "x", )
+    ax.legend(fontsize=25)
+
+    fig.tight_layout()
+    plt.savefig(os.path.join(IMAGE_DIR,'q8_mpg_hp_lr.png'), format='png', dpi=500)
+
+    # plt.show()
+    plt.close()
+
+def part_c():
+    ## Import auto.csv from DATA_DIR
+    auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
 
     ### a) fit a linear regression of horsepower to mpg.
     ## 'horsepower' contains some non-numeric rows which need to be removed
@@ -189,46 +260,28 @@ def main():
     print(results.summary())
 
 
-    print(regr.coef_)
-
-    ## b) Plot the linear model
+    # Plot residuals
     fig, ax = plt.subplots()
-    plt.scatter(X, y, color='grey')
-    line, = ax.plot(X, pred_y, color='red', linewidth=2)
-    plt.rc('legend', fontsize=8)
+    sns.residplot(X, y, lowess=True, color="g", ax=ax)
 
     plt.title("Linear model of mpg vs horsepower", fontsize=30)
-    ax.set_xlabel('Horsepower', fontsize=13)
-    ax.set_ylabel('mpg', fontsize=13)
-    line.set_label("y = " + str(round(float(regr.intercept_), 2)) + " " + str(round(float(regr.coef_), 2)) + "x", )
-    ax.legend(title_fontsize=10)
+    ax.set_xlabel('Fitted values (mpg vs horsepower)', fontsize=20)
+    ax.set_ylabel('residuals', fontsize=20)
 
     height = 3.403
     width = 1.518*height
     fig.set_size_inches(width, height)
     fig.tight_layout()
-    plt.savefig(os.path.join(IMAGE_DIR,'mpg_hp_lr.png'), format='png', dpi=500)
-
-    # plt.show()
+    plt.savefig(os.path.join(IMAGE_DIR,'mpg_hp_residuals.png'), format='png', dpi=500)
+    plt.show()
     plt.close()
 
-    ## Plot residuals
-    # fig, ax = plt.subplots()
-    # sns.residplot(X, y, lowess=True, color="g", ax=ax)
-    #
-    # plt.title("Linear model of mpg vs horsepower", fontsize=30)
-    # ax.set_xlabel('Fitted values (mpg vs horsepower)', fontsize=20)
-    # ax.set_ylabel('residuals', fontsize=20)
-    #
-    # height = 3.403
-    # width = 1.518*height
-    # fig.set_size_inches(width, height)
-    # fig.tight_layout()
-    # plt.savefig(os.path.join(IMAGE_DIR,'mpg_hp_residuals.png'), format='png', dpi=500)
-    # plt.show()
-    # plt.close()
+    diagnostic_plot(results, num_max_res=3, filename='q8_mpg_horsepower_diagplot.png')
 
-    diagnostic_plot(results, num_max_res=3, filename='mpg_horsepower_diagplot.png')
+def main():
+    part_a():
+    part_b():
+    part_c():
 
 
 

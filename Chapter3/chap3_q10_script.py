@@ -154,6 +154,24 @@ def diagnostic_plot(smf_model, num_max_res=3, filename=None):
     else:
         plt.savefig(os.path.join(IMAGE_DIR,filename), format='png', dpi=500)
 
+def part_a():
+    ## Import carseats.csv from DATA_DIR
+    carseats_df = pd.read_csv(os.path.join(DATA_DIR, 'carseats.csv'))
+    carseats_df.drop('Unnamed: 0', axis=1, inplace=True)
+    print(carseats_df)
+
+    ### Fit the multiple linear regression
+    print("Question 10a) regression results")
+    results = smf.ols("Sales ~ Price + Urban + US" , data=carseats_df).fit()
+    print(results.summary())
+
+def part_e():
+    carseats_df = pd.read_csv(os.path.join(DATA_DIR, 'carseats.csv'))
+    carseats_df.drop('Unnamed: 0', axis=1, inplace=True)
+    print(carseats_df)
+
+    results = smf.ols("Sales ~ Price + US" , data=carseats_df).fit()
+    print(results.summary())
 
 def main():
     ###
@@ -164,18 +182,6 @@ def main():
     carseats_df = pd.read_csv(os.path.join(DATA_DIR, 'carseats.csv'))
     carseats_df.drop('Unnamed: 0', axis=1, inplace=True)
     print(carseats_df)
-
-    ### a) Fit the multiple linear regression
-    print("Question 10a) regression results")
-    results = smf.ols("Sales ~ Price + Urban + US" , data=carseats_df).fit()
-    print(results.summary())
-    print('\n\n')
-
-    ### b) Urban and US are qualitative
-
-    ### c)
-
-    ### d) Urban
 
     ### e)
     print("Question 10e) regression results")
