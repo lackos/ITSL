@@ -293,5 +293,21 @@ Best PLS Test score:  1183.92
 Number of Latent variables 14
 ```
 
-## Problem 10
-## Problem 11
+### Part g)
+The complete results are in the following table. All tests are RMSEs for ease of camparison.
+Model | With FE | Without FE
+:-----|:----------:|:------:
+OLS  | 7148  | 1348
+Ridge  | 1393  | 1631
+Lasso  | 1108  | 1194
+PCR  | 1165  |  1209
+PLS  | 1147  |  1184
+
+From this table we can see that both Lasso and PLS are the best performing models. In both of these models the inclusion of the higher order predictors has a negligible increase in performance. It should be noted that we did not treat the training set completely correct with the PLS and PCR models. In these models we fitted the scaler and the PCA to the entire training set before cross-validation. This will have resulted in so test-train contamination. Ideally, these models would be rewritten as pipelines and the scaler/PCA refitted to the $k-1$ cv folds and the testing cv fold transformed accordingly each time.This may increase the reported test errors for PCR and PLS.
+
+
+It is interesting to note how poorly the OLS performed with the extra predictors. This is because, without cross validation, all the unregularized predictors were considered which resulted in an extremely flexible model which overfit  the training set and gave poor test set results. With the extra features the OLS still performed relatively poorly, but significantly better that with the extra features.
+
+There is not too much difference between the test errors for Ridge and Lasso and the both perform relatively well with lasso consistently better.
+
+It is also interesting to compare the performance of PCR and PLS as they are based on similar concepts with PLS being more sophisticated as the principal component selection is supervised. Despite this, for this data set, there is no significant different in performance between the two models.
