@@ -19,6 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'Data')
 IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter8')
 
+np.random.seed(101)
+
 def part_b(X,y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=800)
     ## Instantiate the decission tree classifier
@@ -34,19 +36,35 @@ def part_b(X,y):
     print('train score: ', round(train_score,2))
     print('tree depth: ', depth)
     print('terminal nodes (leaves): ', num_leaves)
-    # print(tree.decision_path(X_test.iloc[0].values.reshape(1,16)))
+    print(tree.decision_path(X_test.iloc[0].values.reshape(1,16)))
 
 def part_e(X, y):
+    ## Split the training and test set
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=800)
 
+    ## Instantiaate the model
     tree = DecisionTreeClassifier()
 
+    ## Fit and predict the model
     tree.fit(X_train, y_train)
     preds = tree.predict(X_test)
-    # cm = confusion_matrix(y_test, preds)
-    #
-    # sns.heatmap(cm)
-    # plt.show()
+    ## Generate the confusion_matrix
+    cm = confusion_matrix(y_test, preds, labels=['CH', 'MM'])
+    # unique, counts = np.unique(y_test, return_counts=True)
+    # print('true counts: ', dict(zip(unique, counts)))
+    # unique, counts = np.unique(preds, return_counts=True)
+    # print('pred counts: ', dict(zip(unique, counts)))
+    # print(cm)
+
+    ## Plot the confusion matrix
+    fig, ax = plt.subplots(1,1, figsize=(12,12))
+    heatmap = sns.heatmap(cm, annot=True, fmt='d', cmap="YlGnBu", xticklabels = ['CH', 'MM'], yticklabels=['CH', 'MM'], annot_kws={'fontsize':'x-large'}, ax=ax, square=True)
+    heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), ha='right', fontsize='x-large')
+    heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), ha='right', fontsize='x-large')
+    ax.set_ylabel('True label', fontsize='x-large')
+    ax.set_xlabel('Predicted label', fontsize='x-large')
+    plt.savefig(os.path.join(IMAGE_DIR, 'q9_cm_heatmap.png'))
+    plt.show()
 
     print(classification_report(y_test, preds))
 
@@ -100,8 +118,8 @@ def main():
     ##Preprocessing
 
     # part_b(X,y)
-    # part_e(X,y)
-    part_g(X, y)
+    part_e(X,y)
+    # part_g(X, y)
 
 if __name__ == "__main__":
     main()

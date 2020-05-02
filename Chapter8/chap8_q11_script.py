@@ -70,10 +70,10 @@ def part_c(X, y):
     knn_cm = confusion_matrix(y_test.values, knn_prob_preds)
     logr_cm = confusion_matrix(y_test.values, logr_prob_preds)
 
-    fig, (ax1, ax2, ax3) = plt.subplots(nrows=1, ncols=3)
-    sns.heatmap(boost_cm, annot=True, fmt="d", ax = ax1) #annot=True to annotate cells
-    sns.heatmap(knn_cm, annot=True, fmt="d", ax = ax2)
-    sns.heatmap(logr_cm, annot=True, fmt="d", ax = ax3)
+    fig, ((ax1), (ax2), (ax3)) = plt.subplots(nrows=3, ncols=1, figsize=(12,30))
+    sns.heatmap(boost_cm, annot=True, fmt="d", ax = ax1, square=True)
+    sns.heatmap(knn_cm, annot=True, fmt="d", ax = ax2, square=True)
+    sns.heatmap(logr_cm, annot=True, fmt="d", ax = ax3, square=True)
 
     # labels, title and ticks
     ax1.set_xlabel('Predicted labels')
@@ -96,7 +96,7 @@ def part_c(X, y):
 
     fig.suptitle('Classifier Confusion Matricies for 20% threshold')
 
-    plt.savefig('q11_confusion_matrices.png')
+    plt.savefig(os.path.join(IMAGE_DIR,'q11_confusion_matrices.png'))
     plt.show()
 
 def main():
@@ -108,7 +108,7 @@ def main():
     X = caravan_df.drop('Purchase', axis=1)
     X_cols = X.columns
 
-    part_b(X, y)
+    # part_b(X, y)
     part_c(X, y)
 
 

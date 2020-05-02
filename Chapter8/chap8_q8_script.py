@@ -19,6 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'Data')
 IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter8')
 
+np.random.seed(101)
+
 def part_b(X,y):
     ## Split in test and training sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
@@ -29,6 +31,8 @@ def part_b(X,y):
     ## Score the tree
     score = tree.score(X_test, y_test)
     print('Test score: ', round(score,2))
+    score = tree.score(X_train, y_train)
+    print('Train score: ', round(score,2))
 
     ## Plot the decision tree
     # fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(36,36))
@@ -68,17 +72,27 @@ def part_c(X,y):
 
 def part_d(X,y):
     ## Bagging approach
-
     ## Split in test and training sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
+    ## Store a list of column names
+    cols = X.columns
+    ## Instaniate the regressor
     tree = DecisionTreeRegressor()
+    ## Instantiate and fit the bagger
     bagger = BaggingRegressor(base_estimator=tree)
     bagger.fit(X_train,y_train)
+
+    ## Score the test set with the bagger
     print('Test Score: ', bagger.score(X_test, y_test))
-    # print(bagger.estimators_)
-    # print(bagger.estimators_features_)
-    print(bagger.estimators_[0].feature_importances_)
+
+    ## Create a dictionary of feature importances in the modeal and sort them
+    feat_import = bagger.estimators_[0].feature_importances_
+    feat_import = dict(zip(cols, feat_import))
+    feat_import = {k: v for k, v in sorted(feat_import.items(), key=lambda item: item[1], reverse = True)}
+    for key, val in feat_import.items():
+        print("{0:<20} : {1:<20}".format(key, round(val,3)))
+    # print(bagger.estimators_[0].feature_importances_)
 
 def part_e(X,y):
     ## Split in test and training sets
@@ -99,9 +113,9 @@ def part_e(X,y):
 
     feat_import = forest.feature_importances_
     feat_import = dict(zip(cols, feat_import))
-    print(feat_import)
+    # print(feat_import)
     ## Sort by feature_importance
-    feat_import = {k: v for k, v in sorted(feat_import.items(), key=lambda item: item[1])}
+    feat_import = {k: v for k, v in sorted(feat_import.items(), key=lambda item: item[1], reverse=True)}
     for key, val in feat_import.items():
         print("{0:<20} : {1:<20}".format(key, round(val,3)))
     # print(feat_import)

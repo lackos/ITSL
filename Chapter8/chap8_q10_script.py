@@ -22,16 +22,16 @@ DATA_DIR = os.path.join(BASE_DIR, 'Data')
 IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter8')
 
 def part_c(X,y):
-    alpha_values = np.arange(0, 10, 0.001)
-    lambda_values = np.arange(0, 10, 0.001)
-    # alpha_values = [np.power(10.0,x) for x in np.arange(-10,1,1)]
-    # lambda_values = [np.power(10.0,x) for x in np.arange(-10,1,1)]
+    # alpha_values = np.arange(0, 10, 0.001)
+    # lambda_values = np.arange(0, 10, 0.001)
+    alpha_values = [np.power(10.0,x) for x in np.arange(-10,2,1)]
+    lambda_values = [np.power(10.0,x) for x in np.arange(-10,2,1)]
     cv_score_alpha_test = []
     cv_score_alpha_train = []
     cv_score_lambda_test = []
     cv_score_lambda_train = []
 
-    boost = xgb.XGBRegressor(n_estimators=100, objective='reg:squarederror')
+    boost = xgb.XGBRegressor(n_estimators=1000, objective='reg:squarederror')
 
     # boost.fit(X,y)
     # preds = boost.predict(X)
@@ -71,28 +71,65 @@ def part_c(X,y):
     ax1.set_ylabel('Score')
     ax1.set_title('Model performance for alpha (l1-regularization)')
     ax1.legend(fontsize = 'large')
+    ax1.set_xscale('log')
 
     ax2.set_xlabel('lambda')
     ax2.set_ylabel('Score')
     ax2.set_title('Model performance for lambda (l2-regularization)')
     ax2.legend(fontsize = 'large')
+    ax2.set_xscale('log')
 
-    plt.savefig(os.path.join(IMAGE_DIR, 'q10_regularization_performance.png'))
+    plt.savefig(os.path.join(IMAGE_DIR, 'q10_1000_regularization_performance_om.png'))
+    plt.show()
+
+def part_d(X,y):
+    # shrinkage_values = [np.power(10.0,x) for x in np.arange(-10,1,1)]
+    shrinkage_values = np.arange(0.01, 1.01, 0.01)
+    cv_score_shrink_test = []
+    cv_score_shrink_train = []
+
+    boost = xgb.XGBRegressor(n_estimators=1000, objective='reg:squarederror')
+
+    ## Set best regularization parameters from last set
+    boost.set_params(reg_lambda=0.1)
+    boost.set_params(reg_alpha=0)
+
+    for s in shrinkage_values:
+        print(s)
+        boost.set_params(learning_rate=s)
+        scores = cross_validate(boost, X, y, return_train_score=True, n_jobs=-1)
+        print(scores['test_score'].mean())
+        print(scores['train_score'].mean())
+        cv_score_shrink_test.append(scores['test_score'].mean())
+        cv_score_shrink_train.append(scores['train_score'].mean())
+
+    ## Plot the results of each cv loop. Both training and testing.
+    fig, ax1 = plt.subplots(nrows=1, ncols=1, figsize=(12,6))
+    ax1.plot(shrinkage_values, cv_score_shrink_test, label='test score')
+    ax1.plot(shrinkage_values, cv_score_shrink_train, label='train_score')
+
+    ax1.set_xlabel('alpha')
+    ax1.set_ylabel('Score')
+    ax1.set_title('Model performance for shrinkage (learning rate)')
+    ax1.legend(fontsize = 'large')
+    # ax1.set_xscale('log')
+
+    plt.savefig(os.path.join(IMAGE_DIR, 'q10_shrinkage_performance_01.png'))
     plt.show()
 
 def main():
     ## Load dataframe
     hitters_df = pd.read_csv(os.path.join(DATA_DIR, "Hitters.csv"))
-    print('columns: ', list(hitters_df.columns))
+    # print('columns: ', list(hitters_df.columns))
     # print(hitters_df.info())
 
     ## Drop the rows where salary is NaN
     hitters_df.dropna(subset=['Salary'], inplace=True)
-    print(hitters_df.isna().sum())
+    # print(hitters_df.isna().sum())
 
     ## Log transform Salary
     hitters_df['log_Salary'] = hitters_df['Salary'].apply(lambda x: np.log(x))
-    print('columns: ', list(hitters_df.columns))
+    # print('columns: ', list(hitters_df.columns))
 
     ## One-hot encode the object columns
     hitters_df = pd.get_dummies(hitters_df, ['League', 'Division', 'NewLeague'], drop_first=True)
@@ -102,7 +139,8 @@ def main():
 
     # X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=200)
 
-    part_c(X,y)
+    # part_c(X,y)
+    part_d(X,y)
 
 if __name__ == "__main__":
     main()

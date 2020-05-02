@@ -27,9 +27,6 @@ def main():
     X = boston_df.drop('target', axis=1)
     y = boston_df['target']
 
-    # print(X)
-    # print(y)
-
     ## Instantiate the RandomForestRegressor
     f_model = RandomForestRegressor()
 
