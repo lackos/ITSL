@@ -36,10 +36,14 @@ def part_b(x_1, x_2, y):
     plt.close()
 
 def part_cd(X, y):
+    ## Instantiate the logistic regression model with the original predictors
     logr = LogisticRegression()
+    ## Fit the model
     logr.fit(X,y)
+    ## Predict the test set
     y_preds = logr.predict(X)
 
+    ## Plot the Predictions
     fig, ax = plt.subplots(1,1,figsize=(12,12))
     sns.scatterplot(x=X[:,0], y=X[:,1], hue=y_preds, ax =ax)
 
@@ -47,18 +51,17 @@ def part_cd(X, y):
     ax.set_ylabel('X_2')
     ax.set_title('Predicted class set with vanilla Logistic Regression')
 
-    plt.savefig(os.path.join(IMAGE_DIR,'q5_pcd_class_plot.png'))
-    # plt.show()
+    # plt.savefig(os.path.join(IMAGE_DIR,'q5_pcd_class_plot.png'))
+    plt.show()
     plt.close()
 
 def part_ef(X, y):
     ## Preprocessing
     x_12 = np.multiply(X[:,0], X[:,1]).reshape(X.shape[0], 1)
-    # print(x_12)
+
     x_1_squared = np.multiply(X[:,0], X[:,0]).reshape(X.shape[0], 1)
     x_2_squared = np.multiply(X[:,1], X[:,1]).reshape(X.shape[0], 1)
-    # x_1_log = np.log(X[:,0])
-    # x_2_log = np.log(X[:,1])
+
     extra_pred_list = [x_12, x_1_squared, x_2_squared]
 
     for arr in extra_pred_list:
