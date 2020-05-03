@@ -12,7 +12,7 @@ import itertools
 
 from sklearn.linear_model import LogisticRegression, Lasso, LinearRegression
 from sklearn.metrics import confusion_matrix, classification_report
-from sklearn.model_selection import cross_val_score, cross_validatation
+from sklearn.model_selection import cross_val_score, cross_validate
 from sklearn.utils import shuffle
 
 import os
@@ -181,9 +181,20 @@ def part_f():
 
 def main():
     X, Y = part_ab()
+    predictor_dict = {'X_1':X,
+                      'X_2':X**2,
+                      'X_3':X**4,
+                      'X_4':X**4,
+                      'X_5':X**5,
+                      'X_6':X**6,
+                      'X_7':X**7,
+                      'X_8':X**8,
+                      'X_9':X**9,
+                      'X_10':X**10}
+    fss(predictor_dict)
     # model = part_c(X,Y)
     # bss({'X_1':X, 'X_2':X**2 , 'X_3':X**4, 'X_4':X**4, 'X_5':X**5}, Y)
-    part_e(X, Y)
+    # part_e(X, Y)
 
 
 if __name__ == "__main__":

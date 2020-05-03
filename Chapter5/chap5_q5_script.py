@@ -14,6 +14,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'Data')
 IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter5')
 
+np.random.seed(100)
+
 def part_a():
     # Load the default dataset
     default_df = pd.read_csv(os.path.join(DATA_DIR, 'default.csv'))

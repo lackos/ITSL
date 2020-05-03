@@ -1,6 +1,6 @@
 # Chapter 6 Conceptual Problems
 
-## Problem 1.
+## Problem One.
 ### Part a)
 The smallest training residual sum of squares (RSS) will occur for the "best subset selection" approach. This is because the algorithm uses the training set RSS to determine which model is the best and it is an exhaustive model (unlike the other two approaches).
 
@@ -12,13 +12,14 @@ It is not possible to definitively say which approach result in the model with t
 
 **ii.** False. As the $k+1$ step removes a predictor, the $k$ model predictors  cannot be a subset.
 
-**iii.** False.
+**iii.** False. This can be demonstrated by a simple toy model of three variables X_1, X_ and X_3. For $k=1$, backward stepwise selection may deem $X_3$ the least important and remove it. However, the $k=1$ step of forward stepwise selection may determine that $X_3$ singularly describes the data better than than the other two varaiables, and therefore the backward stepwise selection will not always be a subset of forward stepwise selection of the k=1$ step.
 
 **iv.** False.
+This follows similar reasons as statement iii.
 
 **v.** False. This assumes that "forward subset selection" will always select the best predictors. However, the "best subset selection" may not even contain the first selected variable of FSS.
 
-## Problem 2.
+## Problem Two
 ### Part a) Lasso Regularization
 The true statement is:
 
@@ -29,12 +30,7 @@ The true statement is:
 
 > Less flexible and hence will give improved prediction accuracy when its increase in bias is less than its decrease in variance.
 
-## Problem 3.
-### Part a)
-
-## Problem 4.
-
-## Problem 5.
+## Problem Five
 For this problem the number of data points is $n=2$ and the number of predictors is $p=2$. It also has the constraints:
 \[
 x_{11} = x_{12} \quad x_{22} = x_{21} \\
@@ -78,7 +74,7 @@ Similarly there is the same cancellation of the terms when minimizing as in part
 \lambda\left(\dfrac{\partial }{\partial \beta_1}|\beta_1| - \dfrac{\partial }{\partial \beta_2}|\beta_2|\right) = 0
 \]
 
-## Problem 6.
+## Problem Six
 Toy model regularization with $n=p$ and $\textbf{X} = I(n)$ where $I(n)$ is the identity matrix of order $n$.
 
 ### Part a)
@@ -97,5 +93,3 @@ This  is just a quadratic equation with no roots. Mimimizing this w.r.t. $\beta_
 \[
 \beta_1 = \dfrac{y_1}{(\lambda + 1)}.
 \]
-
-## Problem 7.

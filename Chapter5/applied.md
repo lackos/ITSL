@@ -1,7 +1,109 @@
 # Chapter 5 Applied Problems
-## Problem 6:
-### a)
 ```python
+import pandas as pd
+import numpy as np
+import os
+
+import matplotlib.pyplot as plt
+import seaborn sns
+
+np.random.seed(100)
+```
+## Problem Five
+### Part a)
+Load the data
+```python
+## Load the default dataset
+default_df = pd.read_csv(os.path.join(DATA_DIR, 'default.csv'))
+```
+Fit the logisitic regression model.
+```python
+from sklearn.linear_model import LogisticRegression
+## Fit the logistic regression (no train test split or cross val)
+X = default_df[['income', 'balance']]
+y = default_df['default']
+log_reg_model = LogisticRegression()
+log_reg_model.fit(X, y)
+```
+### Part b)
+Normally we would use sklearn's `train_test_split` to generate the training and test set, however here we do it manually for demonstration. Throughout the rest of the problems we will use sklearn.
+#### i.
+```python
+### Shuffle the data
+index = default_df.index
+default_df = shuffle(default_df)
+default_df.index = index
+## Set train set to 80% and validation to 20%
+size = default_df.shape[0]
+train = default_df.loc[0:0.8*size - 1]
+validation = default_df.loc[0.8*size:]
+```
+#### ii.
+Fit the model to the training set:
+```python
+## Fit logistic regression to the training set
+X_train = train[['income', 'balance']]
+X_val = validation[['income', 'balance']]
+y_train = train['default']
+y_val = validation['default']
+log_reg_model = LogisticRegression()
+log_reg_model.fit(X_train, y_train)
+```
+#### iii.
+Sklearn's default classification threshold is 50% and therefore a simple predict method is all that is needed. To see how to do this manually refer the solution of CHapter 4 problems.
+```python
+preds = log_reg_model.predict(X_val)
+```
+#### iv.
+Compute the test error with the trace of the confusion matrix and the total number of predictions.
+```python
+## iv) Compute the test error
+cm = confusion_matrix(preds, y_val)
+test_error = (cm[0,1] + cm[1,0])/(len(preds))
+print('Test Error: ',test_error)
+```
+```
+Test Error: 0.036
+```
+### Part c)
+This can be accomplished with three different random seeds to get the following results,
+```
+# Random Seed 101
+Test Error:  0.0265
+# Random Seed 102
+Test Error:  0.033
+# Random Seed 103
+Test Error:  0.0245
+```
+Here we see that the results are different by similar for the 4 different splits. On average, this model has a test error of 0.03.
+
+### Part d)
+Refit the model with the extra variable and generate the new predictions.
+```python
+## Fit logistic regression to the training set
+X_train = train[['income', 'balance', 'student_Yes']]
+X_val = validation[['income', 'balance', 'student_Yes']]
+y_train = train['default']
+y_val = validation['default']
+log_reg_model = LogisticRegression()
+log_reg_model.fit(X_train, y_train)
+preds = log_reg_model.predict(X_val)
+
+## Compute the test error
+cm = confusion_matrix(preds, y_val)
+test_error = (cm[0,1] + cm[1,0])/(len(preds))
+print('Test Error: ',test_error)
+```
+```
+Test Error:  0.036
+```
+
+## Problem Six
+### Part a)
+```python
+import scipy.stats as stats
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
 # Load the default dataset
 default_df = pd.read_csv(os.path.join(DATA_DIR, 'default.csv'))
 binary_dict = {'No':0, 'Yes':1}
@@ -34,7 +136,8 @@ balance        0.0056      0.000     24.835      0.000       0.005       0.006
 ==============================================================================
 ```
 
-### b)
+### Part b)
+
 
 ## Problem 8
 ### c) - d)

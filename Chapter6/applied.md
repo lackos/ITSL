@@ -1,11 +1,20 @@
 # Chapter 6 Applied Problems
+```python
+import pandas as pd
+import numpy as np
+import os
 
-## Problem 8
+import matplotlib.pyplot as plt
+import seaborn sns
+
+np.random.seed(100)
+```
+
+## Problem Eight
 ### Part a) & b)
 To generate the reponse predictor and response the following code was used:
 
 ``` python
-import numpy as np
 ## Generate the simulated data
 X = np.random.randn(100)
 err = np.random.randn(100)
@@ -35,14 +44,6 @@ Here we see that, for this random seed, the best subset was selected for each on
 
 ### Part d)
 Once again sklearn or statsmodels does not have forward stepwise selection or backwards stepwise seletion.
-
-### Part e)
-The plot of lambda against the cross validation score (mean R^2 value) is,
-
-<img src="../Images/Chapter6/lasso_lambda_plot.png" alt="PRSS Ridge" title="Boxplots of weekly_df"  />
-
-### Part f)
-
 
 ## Problem 9
 ### Part a)
