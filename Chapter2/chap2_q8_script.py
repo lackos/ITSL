@@ -10,11 +10,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'Data')
 IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter2')
 
+
+
 def main():
     ###
     ### Question 8
     ###
-
 
     ### a)
     ## Import College.csv from DATA_DIR
@@ -33,7 +34,7 @@ def main():
 
     ### c)
     ## Print the Summary of the dataframe
-    # print(college_df.describe())
+    print(college_df.describe())
 
     ## Plot the scatter matrix of the first 11 numerical columns
     ax1 = sns.pairplot(college_df[college_df.columns[0:11]])

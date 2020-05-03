@@ -13,10 +13,11 @@
    |----|-----------------|---|---|-----------|------------|
    |a)  | Regression      |500| 3 |     Y     |     N      |
    |b)  | Classification  |20 | 13|     N     |     Y      |
-   |c)  | Regression      |52 | 4 |     N     |     Y      |		  
-3. 
+   |c)  | Regression      |52 | 4 |     N     |     Y      |
+3.
 a) The variance, bias, test error, trianing error and Bayes error are plotted below.
-<img src='../Images/Chapter2/flexibility_plots.png' width='600'> 
+
+<img src='../Images/Chapter2/flexibility_plots.png' width='600'>
 
    b) **Variance**
 
@@ -24,10 +25,10 @@ a) The variance, bias, test error, trianing error and Bayes error are plotted be
 
       **Training Error**
 
-      **Test Error** 
+      **Test Error**
 
       **Bayes Error**
-	Fundamental error of the model also known as irreducible error.  
+	Fundamental error of the model also known as irreducible error.
 
 4.
  a) **Classification Problem**
@@ -45,7 +46,7 @@ a) The variance, bias, test error, trianing error and Bayes error are plotted be
    | High chance of overfitting     | High chance of underfitting|
    | Difficult to interpret results | Easier to interpret results|
 
-6. Parametric approaches are those which model a system with a set of statistical parameters. For example linear regression is a parametric model where the graadients and intercept are the parameters. A nonparametric approach is one which does not use these distinct parameters, for example a decsion tree model. Each has their advantages, parametric models are typically more interpretable but less flexible than non-parametric models and therefore have a higher bias. These non parametric forms do not assume a functional form of the relationship between the target and the predictors unline the parametric models. 
+6. Parametric approaches are those which model a system with a set of statistical parameters. For example linear regression is a parametric model where the graadients and intercept are the parameters. A nonparametric approach is one which does not use these distinct parameters, for example a decsion tree model. Each has their advantages, parametric models are typically more interpretable but less flexible than non-parametric models and therefore have a higher bias. These non parametric forms do not assume a functional form of the relationship between the target and the predictors unline the parametric models.
 7a.| Point | distance  |
    |------|------------|
    |1     | 3          |
@@ -56,4 +57,3 @@ a) The variance, bias, test error, trianing error and Bayes error are plotted be
    |6     | $\sqrt{3}$ |
 7b. For $K=1$ the nearest point is 5 and therefore it would be classified as 'Green'.
     For $K=3$ the nearest points are {'Red', 'Red', 'Green'} and therefore it will be classified as 'Red'.
-
