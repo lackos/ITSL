@@ -50,8 +50,7 @@ plt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95)
 ax1.fig.suptitle('College Scatter Matrix', fontsize=35)
 ```
 
-<img src="../Images/Chapter2/college_scatter_matrix.png" alt="weekly Boxplots" title="Confusion matrix of the logistic regression results" />
-
+<img src="/static/Images/Chapter2/college_scatter_matrix.png" alt="College scatterplot" title="Confusion matrix of the logistic regression results" width=1100 />
 #### iii.
 Produce the boxplots of the `Outstate` vs `Private`
 ```python
@@ -67,7 +66,7 @@ plt.show()
 plt.close()
 ```
 
-<img src="../Images/Chapter2/Outstate_Private_boxplot.png" alt="weekly Boxplots" title="Confusion matrix of the logistic regression results" />
+<img src="../Images/Chapter2/Outstate_Private_boxplot.png" alt="weekly Boxplots" title="Confusion matrix of the logistic regression results" width=500 />
 
 #### iv.
 Create the new column with pandas:
@@ -91,7 +90,7 @@ plt.show()
 plt.close()
 ```
 
-<img src="../Images/Chapter2/Outstate_Elite_boxplot.png" alt="weekly Boxplots" title="Confusion matrix of the logistic regression results" />
+<img src="../Images/Chapter2/Outstate_Elite_boxplot.png" alt="weekly Boxplots" title="Confusion matrix of the logistic regression results" width=500  />
 
 ## Problem Nine
 ### Part a)
@@ -178,3 +177,63 @@ acceleration mean: 15.71 , std. dev.: 2.71
 year mean: 77.14 , std. dev.: 3.13
 origin mean: 1.6 , std. dev.: 0.82
 ```
+
+## Problem Ten
+Load in the dataset
+```python
+## Load the boston dataset
+boston_df = pd.read_csv(os.path.join(DATA_DIR, 'boston.csv'))
+```
+### Part a)
+Get a general breakdown of the data:
+```python
+print('Numerical Breakdown of quant. variables: \n')
+print(boston_df.describe())
+print("Total number of columns: ", len(boston_df.columns))
+print("Column Names:")
+for col in boston_df.columns:
+    print(col)
+```
+```
+Numerical Breakdown of quant. variables:
+
+             CRIM          ZN       INDUS        CHAS         NOX          RM         AGE         DIS         RAD         TAX     PTRATIO           B       LSTAT      target
+count  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000  506.000000
+mean     3.613524   11.363636   11.136779    0.069170    0.554695    6.284634   68.574901    3.795043    9.549407  408.237154   18.455534  356.674032   12.653063   22.532806
+std      8.601545   23.322453    6.860353    0.253994    0.115878    0.702617   28.148861    2.105710    8.707259  168.537116    2.164946   91.294864    7.141062    9.197104
+min      0.006320    0.000000    0.460000    0.000000    0.385000    3.561000    2.900000    1.129600    1.000000  187.000000   12.600000    0.320000    1.730000    5.000000
+25%      0.082045    0.000000    5.190000    0.000000    0.449000    5.885500   45.025000    2.100175    4.000000  279.000000   17.400000  375.377500    6.950000   17.025000
+50%      0.256510    0.000000    9.690000    0.000000    0.538000    6.208500   77.500000    3.207450    5.000000  330.000000   19.050000  391.440000   11.360000   21.200000
+75%      3.677082   12.500000   18.100000    0.000000    0.624000    6.623500   94.075000    5.188425   24.000000  666.000000   20.200000  396.225000   16.955000   25.000000
+max     88.976200  100.000000   27.740000    1.000000    0.871000    8.780000  100.000000   12.126500   24.000000  711.000000   22.000000  396.900000   37.970000   50.000000
+
+Total number of columns:  14
+
+Column Names:
+CRIM
+ZN
+INDUS
+CHAS
+NOX
+RM
+AGE
+DIS
+RAD
+TAX
+PTRATIO
+B
+LSTAT
+target
+
+```
+### Part b)
+Generate the scatterplot matric for the dataset:
+```python
+ax1 = sns.pairplot(boston_df)
+plt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95)
+ax1.fig.suptitle('Boston Scatter Matrix', fontsize=35)
+plt.savefig(os.path.join(IMAGE_DIR,'boston_scatter_matrix.png'), format='png', dpi=250)
+plt.show()
+```
+
+<img src="../Images/Chapter2/boston_scatter_matrix.png" alt="weekly Boxplots" title="Confusion matrix of the logistic regression results" width='1200'/>

@@ -1,6 +1,6 @@
 # Chapter 3 conceptual questions
 
-1. The null hypothesis of this model can be states as:
+1. The null hypothesis of this model can be stated as:
 "In determining the affect advertising options has on sales, there is no effect
 caused by TV, radio or newspaper advertising."
 
@@ -34,9 +34,3 @@ Due to the statistically significant p-values of TV and radio advertising we can
  of an estimator offers no insight on its validity in the model. For example, we
  could change the order of magnitude of an estimator be any degree with a change
  of units.
-
-4.
-
-5.
-
-6. 
