@@ -1,4 +1,4 @@
-# Chapter 6 Applied Problems
+# Chapter Six Applied Problems
 ```python
 import pandas as pd
 import numpy as np
@@ -11,7 +11,7 @@ np.random.seed(100)
 ```
 
 ## Problem Eight
-### Part a) & b)
+### Parts a) & b)
 To generate the reponse predictor and response the following code was used:
 
 ``` python
@@ -45,7 +45,7 @@ Here we see that, for this random seed, the best subset was selected for each on
 ### Part d)
 Once again sklearn or statsmodels does not have forward stepwise selection or backwards stepwise seletion.
 
-## Problem 9
+## Problem Nine
 ### Part a)
 Split the data in test set and training set (this will only be used for the linear regression, all other models are cross-validated with the whole set).
 
@@ -296,6 +296,7 @@ Number of Latent variables 14
 
 ### Part g)
 The complete results are in the following table. All tests are RMSEs for ease of camparison.
+
 Model | With FE | Without FE
 :-----|:----------:|:------:
 OLS  | 7148  | 1348

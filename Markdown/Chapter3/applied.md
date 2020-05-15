@@ -1,4 +1,4 @@
-# Chapter 3 Applied problems
+# Chapter Three Applied problems
 
 Load the Directories
 ```python
@@ -8,7 +8,7 @@ IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter3')
 ```
 
 ## Problem 8
-### a) Simple Linear Regression
+### Part a) Simple Linear Regression
 
 Load the 'auto' data
 
@@ -73,7 +73,7 @@ From these results we can make the following conclusions:
 
 **iv.** Statsmodels linear plot conveniently produces the 95% confidence interval in the results. It is [-0.171, -0.145]mpg/hp.
 
-### b) Linear plot
+### Part b) Linear plot
  Using the python script for linear regression produces the following plot:
 
 <img src='../Images/Chapter3/q8_mpg_hp_lr.png' width='600'>
@@ -84,7 +84,7 @@ From this plot we can see the negative relationship between `horsepower` and `mp
 mpg = A\exp(-\beta*horsepower) + shift
 \]
 
-### c) Diagnostic plots
+### Part c) Diagnostic plots
 
 The Diagnostic plots were generated with a python code from https://towardsdatascience.com/going-from-r-to-python-linear-regression-diagnostic-plots-144d1c4aa5a
 
@@ -114,7 +114,7 @@ From the Diagnostic plots we can see that there are some points which are consis
 ## Problem 9
 SCRIPT: chap3_q9_script.py
 
-### a) Scatter Matrix
+### Part a) Scatter Matrix
 Run the following code to generate the scatter matrix of all the variables.
 
 ```python
@@ -132,7 +132,7 @@ This produces the scatter matrix:
 
 <img src='../Images/Chapter3/q9_auto_scatter_matrix.png' width='600'>
 
-### b) Correlation Matrix
+### Part b) Correlation Matrix
 Similar to above the following code generates the Correlation matrix for all the variables.
 
 ```python
@@ -147,7 +147,7 @@ plt.show()
 
 <img src='../Images/Chapter3/q9_auto_corr_matrix.png' width='600'>
 
-### c) Multiple Linear Regression
+### Part c) Multiple Linear Regression
 
 Now we perform multiple linear regression with most of the variable as predictors. The code is simply
 
@@ -200,7 +200,7 @@ Kurtosis:                       4.460   Cond. No.                     8.59e+04
 
 **iii.*** The coefficient for the year suggests a positive relationship between the year and mpg. This can be interpreted as more recently made cars have a high mpg. This is as we expect as newer cars are designed to be more efficient.
 
-### d) Diagnostic Plots
+### Part d) Diagnostic Plots
 The Diagnostic plots are:
 
 <img src='../Images/Chapter3/q10_diagnostic_plots.png' width='600'>
@@ -211,7 +211,7 @@ These diagnostic plots are promising in general. A few key points can be made:
 * There are no obvious outliers.
 * There are no high leverage points.
 
-### e) Interaction effects
+### Part e) Interaction effects
 
 The following code includes interaction effects
 
@@ -294,7 +294,7 @@ The only two intereactions which appear to be statistically significant are:
 The above model with all the interaction effects included is a poor model which cannot well explain the variance of the data.
 
 ## Problem 10
-### a) Multiple Linear Regression
+### Part a) Multiple Linear Regression
 The following code fit the mulitple linear regress with predictors, `Price`, `Urban` and `Us` and response `Sales`
 
 ```python
@@ -332,13 +332,13 @@ Skew:                           0.093   Prob(JB):                        0.684
 Kurtosis:                       2.897   Cond. No.                         628.
 ==============================================================================
 ```
-### b) Model interpretation
+### Part b) Model interpretation
 * Intercept: Self explanatory
 * $\beta_{Price}$: For all other variables remaining constant, an increase in price of a single unit (dollar) results in an average decrease in unit sales of 0.0545.
 * $\beta_{Urban}$: For all other variables remaining constant, an urban state will decrease the average sales by 0.0219. However this result is statistically insignificant.
 * $\beta_{US}$: For all other variables remaining constant, a US state will increase the average sales by 1.2.
 
-### c) Equation form of model
+### Part c) Equation form of model
 The above move can be written as,
 \[
 Y= \beta_{0} + \beta_{Price}X_{Price} + \beta_{US}X_{US} + \beta_{Urban}X_{Urban}
@@ -346,10 +346,10 @@ Y= \beta_{0} + \beta_{Price}X_{Price} + \beta_{US}X_{US} + \beta_{Urban}X_{Urban
 
 where $X_{i}=[0,1]$ for 'Yes' and 'No' respectively. This will result in 4 separate equations based on the values of the qualitative variables.
 
-### d) Rejection of Null Hypothesis
+### Part d) Rejection of Null Hypothesis
 The Urban coefficient has a large P value and therefore is statistically insignificant.
 
-### e) New model without 'Urban'
+### Part e) New model without 'Urban'
 Fit the New model with the following code,
 ```python
 carseats_df = pd.read_csv(os.path.join(DATA_DIR, 'carseats.csv'))
@@ -385,12 +385,12 @@ Kurtosis:                       2.895   Cond. No.                         607.
 ==============================================================================
 ```
 
-### f) Model comparison
+### Part f) Model comparison
 * Both models do not fit the data well at all based on the summary statistics.
 * The low $R^2$ values suggest that there is a significant amount of unexplained variance in the moodels.
 * The small value of the $F-$ statistic suggests there is not a significant relationship between the Price and the sets of predictors in either model. While the revised model is slightly better it is not sufficient to declare it a good model.
 
-### h) Diagnostic plots
+### Part h) Diagnostic plots
 The Diagnostic plots for the second model are:
 
 <img src="../Images/Chapter3/q10_diagnostic_plots.png" alt="Diagnostic Plots" title="Question 10 Diagnostic Polots" width="600"/>
@@ -405,7 +405,7 @@ This shows the nuances of linear regression modeling. Even with good diagnostic 
 
 ## Problem 11
 
-### a) Linear regression with intercept
+### Part a) Linear regression with intercept
 ```
                                   OLS Regression Results
 =======================================================================================
@@ -432,7 +432,7 @@ Kurtosis:                       3.019   Cond. No.                         1.00
 
 These results suggest (obviously) that the x coefficient is statistically significant. That is, $y$ is linearly dependent on $x$.
 
-### b) With intercept
+### Part b) With intercept
 ```
                          OLS Regression Results
 ==============================================================================
@@ -460,5 +460,5 @@ Kurtosis:                       3.547   Cond. No.                         1.12
 
 We see that with an intercept the x-coefficient is still statistically significant as expected.
 
-### c) Model relationship
+### Part c) Model relationship
 Both plots are very closely related. This is because the intercept, when included, is relatively small.

@@ -1,4 +1,4 @@
-# Chapter 4 Applied Problems
+# Chapter Four Applied Problems
 A complete python script for each problem can be found in the current folder.
 
 ```python
@@ -7,7 +7,7 @@ DATA_DIR = os.path.join(BASE_DIR, 'Data')
 IMAGE_DIR = os.path.join(os.path.join(BASE_DIR, 'Images'), 'Chapter4')
 ```
 ## Problem 10
-### a)
+### Part a)
 Load the data:
 ```python
 weekly_df = pd.read_csv(os.path.join(DATA_DIR, 'weekly.csv'))
@@ -65,7 +65,7 @@ Finally we look at the scatter plots of the binarized 'Direction' variable and a
 
 These scatterplots confirm our fears... this data lacks any sort of logarithmic relationship as none of the plots have an S-curve shape. The closest is for Lag2.
 
-### b)
+### Part b)
 ```
                         Logit Regression Results
 ==============================================================================
@@ -91,7 +91,7 @@ Lag5          -0.0145      0.026     -0.549      0.583      -0.066       0.037
 
 From the results of the Logistic regression we can see that the p-values for all the numeric varaibles are quite high. The lowest, and closest to being statistically significant is 'Lag2' with a p-value of 0.03. The positive coefficient for this lag suggests that a postive return for the stock market two days ago means an increase in the stock today. These results agree with our suspicions from the plot inspections.
 
-### c)
+### Part c)
 Confusion matrix using the logistic fit and a threshold of 0.5 to classify the predictions. It should be noted that this is a poor way to implement the model as we are testing the model on the exact same data used to train it. This however, is still insufficient to produce good results. The confusion matrix of the predictions is:
 
 <img src="../Images/Chapter4/q10_log_reg_cm_0.5.png" alt="weekly Boxplots" title="Confusion matrix of the logistic regression results" />
@@ -108,7 +108,7 @@ False Positives (Ups): Number of 'Down's wrongly classified as 'Up's
 
 The accuracy of these predictions are 56%. This is a terrible score, not much better than randomly guessing. This is to be expected as the variables did not have a logarithmic shape.
 
-### d)-g)
+### Parts d)-g)
 Consider only the effect of 'Lag2' variable we perform each classification method. In this case we also split up the training and test cases as we train on 'historical data' and try and predict current data.
 
 The results logistic regression results from part d) are:
@@ -148,14 +148,14 @@ In conclusion there is no model which can predict much better than random guessi
 ## Problem 11
 This problem is similar to 10 except using the 'auto' dataset to predict whether a can has above median mpg.
 
-### a)
+### Part a)
 Use the following code to generate the binary variable for mpg
 ```python
 auto_df = pd.read_csv(os.path.join(DATA_DIR, 'auto.csv'))
 median_mpg = auto_df['mpg'].describe()['50%']
 auto_df['mpg01'] = auto_df['mpg'].apply(lambda x: 1 if x > median_mpg else 0)
 ```
-### b)
+### Part b)
 We produced boxplots, distribution plots and scatter plots to analyze the data:
 
 #### Boxplots
@@ -180,7 +180,7 @@ Lastly we have the scatter plots of the varaible with a logarithmic fit (see cod
 
 From these plots we will use the varaibles `weight`, `acceleration`, `displacement` and `cylinders` as the predictor variables.
 
-### c)
+### Part c)
 Split the data with the following code. As there a similar number of each type (0, 1) in the dataset we do not have the problem of class imbalance. Therefore a simple random split of the data should be sufficient.
 
 ```python
@@ -198,7 +198,7 @@ X_train, X_test, y_train, y_test = train_test_split(auto_df[['cylinders',
 print(y_train.value_counts())
 ```
 
-### d)-f) Classification with difference models
+### Parts d)-f) Classification with difference models
 #### LDA
 ```python
 lda_model = LinearDiscriminantAnalysis()
@@ -296,7 +296,7 @@ False Positives (FN) =  5
 Accuracy =  0.88
 ```
 
-### g) KNN classification
+### Part g) KNN classification
 
 ```python
 width=20
@@ -317,26 +317,27 @@ for n in range(1,20):
 ```
 
 KNN results:
+
 | N | True negatives | True Positives | False Negatives | False Positives | Accuracy |
 |---|----------------|----------------|-----------------|-----------------|----------|
 |1   |36             |33              |7                |4                |0.86      |
-2                   |37                  |32                  |8                   |3                   |0.86                |
-3                   |37                  |36                  |4                   |3                   |0.91                |
-4                   |38                  |33                  |7                   |2                   |0.89                |
-5                   |36                  |34                  |6                   |4                   |0.88                |
-6                   |38                  |33                  |7                   |2                   |0.89                |
-7                   |36                  |35                  |5                   |4                   |0.89                |
-8                   |38                  |35                  |5                   |2                   |0.91                |
-9                   |36                  |36                  |4                   |4                   |0.9                 |
-10                  |36                  |36                  |4                   |4                   |0.9                 |
-11                  |35                  |37                  |3                   |5                   |0.9                 |
-12                  |36                  |36                  |4                   |4                   |0.9                 |
-13                  |35                  |36                  |4                   |5                   |0.89                |
-14                  |36                  |36                  |4                   |4                   |0.9                 |
-15                  |36                  |36                  |4                   |4                   |0.9                 |
-16                  |37                  |35                  |5                   |3                   |0.9                 |
-17                  |34                  |36                  |4                   |6                   |0.88                |
-18                  |36                  |36                  |4                   |4                   |0.9                 |
-19                  |35                  |37                  |3                   |5                   |0.9                 |
+|2   |37             |32              |8                |3                |0.86      |
+|3   |37             |36              |4                |3                |0.91      |
+|4   |38                  |33                  |7                   |2                   |0.89                |
+|5   |36                  |34                  |6                   |4                   |0.88                |
+|6   |38                  |33                  |7                   |2                   |0.89                |
+|7   |36                  |35                  |5                   |4                   |0.89                |
+|8   |38                  |35                  |5                   |2                   |0.91                |
+|9   |36                  |36                  |4                   |4                   |0.9                 |
+|10  |36                  |36                  |4                   |4                   |0.9                 |
+|11  |35                  |37                  |3                   |5                   |0.9                 |
+|12  |36                  |36                  |4                   |4                   |0.9                 |
+|13  |35                  |36                  |4                   |5                   |0.89                |
+|14  |36                  |36                  |4                   |4                   |0.9                 |
+|15  |36                  |36                  |4                   |4                   |0.9                 |
+|16  |37                  |35                  |5                   |3                   |0.9                 |
+|17  |34                  |36                  |4                   |6                   |0.88                |
+|18  |36                  |36                  |4                   |4                   |0.9                 |
+|19  |35                  |37                  |3                   |5                   |0.9                 |
 
 While there is not a large difference in the accuracy for different number of neighbours, the best be classifiers are for N=3 and N=8.

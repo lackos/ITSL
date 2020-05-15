@@ -1,4 +1,4 @@
-# Chapter 4: Classification
+# Chapter Four Conceptual Problems
 ## Problem 1:
 $$
 \begin{aligned}
@@ -10,4 +10,3 @@ p(x) &= \frac{\exp(\beta_{0} + \beta_{1}x)}{1 + \exp(\beta_0 + \beta_{1}x)}\\
 &= \exp(\beta_0 + \beta_{1}x)
 \end{aligned}
 $$
-## Problem 2:

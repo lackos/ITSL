@@ -1,4 +1,5 @@
-# Chapter 8 Applied Problems
+# Chapter Eight Applied Problems
+
 Load all the standard modules
 
 ```python

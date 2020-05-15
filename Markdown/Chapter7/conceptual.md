@@ -89,7 +89,7 @@ f'_{2}(\xi) &= \beta_{1} + 3\beta_{4}\xi^{2} + 2\beta_{2}\xi - 6\beta_{4}\xi^{2}
 
 Therefore the first derivative of $f$ is continuous at the knot and everywhere.
 
-### Part d)
+### Part e)
 Show that $f''(x)$ is continuous at the knot.
 \[
 f''_{1}(\xi) =  2\beta_{2} + 6\beta_{3}\xi
@@ -108,7 +108,7 @@ f''_{2}(\xi) &=  2\beta_{2} - 6\beta_{4}\xi + 6\beta_{3}\xi + 6\beta_{4}\xi \\
 
 Therefore the second derivative of $f$ is continuous at the knot and everywhere.
 
-## Problem 5
+## Problem Five
 Considering the two smoothing functions,
 \[
 g_1 = \text{arg} \min_{g}\left(\sum_{i}\left(y_i - g_i(x)\right)^2 + \lambda\int\left(g^{(3)}(t)\right)dt\right)
@@ -122,4 +122,4 @@ For $\lambda \rightarrow \infty$ the effect of the constraint in maximized. In t
 It is not possible to definitively say which will have a greater test RSS as that depends on the variance and bias tradeoff. All we can say is that maximally constraining the $g_1$ will lower the variance and increase the bias of the model than maximally constraining $g_2$ will.
 
 ## Part c)
-For $\lambda = 0$ there is no constraint and the training data is completely interpolated by the function and most definitely overfits the data and has a poor test RSS. Here $g_1 = g_2$.  
+For $\lambda = 0$ there is no constraint and the training data is completely interpolated by the function and most definitely overfits the data and has a poor test RSS. Here $g_1 = g_2$.

@@ -1,6 +1,6 @@
-# Chapter 6 Conceptual Problems
+# Chapter Six Conceptual Problems
 
-## Problem One.
+## Problem One
 ### Part a)
 The smallest training residual sum of squares (RSS) will occur for the "best subset selection" approach. This is because the algorithm uses the training set RSS to determine which model is the best and it is an exhaustive model (unlike the other two approaches).
 

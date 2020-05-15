@@ -1,5 +1,5 @@
 # Chapter 9 Conceptual Problems
-## Problem 1
+## Problem One
 ### Part a)
 The Hyperplane $H_1 = 1 + 3X_1 - X_2 = 0$ is plotted below.
 
@@ -14,7 +14,7 @@ The Hyperplane $H_1 = -2 + X_1 - 2X_2 = 0$ is plotted below.
 
 The red region corresponds to solutions $H_2 < 0$ and the blue region $H_2 > 0$.
 
-## Problem 2
+## Problem Two
 ### Part a)
 The non-linear hyperplane $H = (X_1 + 1)^2 + (X_2 - 2)^2 - 4 = 0$ which is a simple circle.
 
@@ -36,7 +36,7 @@ The region $H<0$ is shaded red. Other wise, the solution is $H \geq 0$.
 ### Part d)
 This is similar to the case of linear regression being used to model non linear model by expanding the feature space with not linear functions of the original predictors.
 
-## Problem 3
+## Problem Three
 ### Part a)
 A plot of the classified observations is below.
 

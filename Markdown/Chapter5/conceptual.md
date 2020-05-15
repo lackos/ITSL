@@ -1,6 +1,6 @@
-# Chapter 5: Conceptual Problems
+# Chapter Five Conceptual Problems
 
-## Problem 1
+## Problem One
 Given a combination of variable $X$ with variance '$\sigma_{X}$ and $Y$ with variance '$\sigma_{Y}$. For a combination of these variables $\alpha X + (1-\alpha) Y$ find value of $\alpha$ which minimizes the total variance $Var$.
 \[
 \begin{aligned}
@@ -23,16 +23,16 @@ Minimizing this with respect to $\alpha$,
 \]
 
 ## Problem 3: Validation Comparisons
-### a)
+### Part a)
 $k$-fold cross-validation consists of splitting the training data into $k$ separate sets.
 
 The data is then trainined on the $\frac{k-1}{k}$ fraction of the dataset. The remaining $k$th partition is used to validate and score the data. This is repeated with each distinct $k$th partition as the validation set and the rest as the training resulting in $k$ iterations and validation errors.
 
 The final CV score is the average of these $k$ test scores.
 
-### b)
-#### i)
+### Part b)
+#### i.
 The single validation set approach results in a single score on the valdation set. This score can be highly dependent on the data selected in the train-test split and is not totally indicative of the true test error. It also reduces the total data that is used to test the data set. $k$-fold cross-validation addresses this by taking many small samples and, after all the iterations, trains the model on the entire dataset.
 
-#### ii)
+#### ii.
 This is a subset of $k$-fold cross-validation where $k$ is the number of datapoints. It is highly computationally expensive for even a moderately sized dataset.

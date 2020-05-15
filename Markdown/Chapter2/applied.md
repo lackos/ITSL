@@ -1,4 +1,4 @@
-# Chapter 2 Applied Problems
+# Chapter Two Applied Problems
 ```python
 import pandas as pd
 import numpy as np
