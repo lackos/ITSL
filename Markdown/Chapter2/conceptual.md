@@ -29,27 +29,26 @@ The variance, bias, test error, trianing error and Bayes error are plotted below
 <img src='../Images/Chapter2/flexibility_plots.png' width='600'>
 
 ### Part b)
-**Variance**
+#### Variance
+In a highly inflexible model each datapoint will not have a large affect on the overall model. Therefore each model hypothesis from a different training set will not vary significantly (differ from some averge model hypothesis). The models will be accurate but not necessarily precise.
 
-**Bias**
+As the model becomes more flexible and tries to capture more of each training sets nature, each new training model will differ more than the inflexible case and therefore have a larger variance.
 
-**Training Error**
+#### Bias
+For inflexible models there is a large bias. Bias indicates how well the model in general differs from the true nature of a training set. For models with low flexibility the averge model hypothesis will differ largely from the true nature sample.
 
-**Test Error**
+As the flexibility increases, the average model converges on the samples true nature and the bias decreases.
+
+#### Training Error
+As the flexibility of the model increases the bias of the model decreases and it can ore accurately fit the training data.
+
+#### Test Error
+The U-shape of the test error reflects the property of unfitting or overfitting the model on the training set. An inflexible model will underfit the training data, not capturing enough of the nature of the relationships and result in a high error.
+
+Conversely, a very flexble model will overfit the training data, capturing too much of the noise of the training set and poorly fitting the out of sample test set.
 
 **Bayes Error**
-Fundamental error of the model also known as irreducible error.
-
-## Problem Four
-
-### Part a)
-**Classification Problem**
-
-### Part b)
-**Regression Problem**
-
-### Part c)
-**Cluster Analysis**
+Fundamental error of the model also known as irreducible error. This can arise from many things such as insufficient data collected for the problem. The training or test set errors cannot lie under these errors.
 
 ## Problem Five
 
