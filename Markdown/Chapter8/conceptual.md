@@ -1,4 +1,5 @@
-# Chapter Eight Conceptual Problems
+# Chapter Eight: Tree-Based Models
+# Conceptual Problems
 
 ## Problem One
 

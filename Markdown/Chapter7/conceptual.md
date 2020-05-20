@@ -1,4 +1,6 @@
-# Chapter 7 Conceptual Problems
+# Chapter 7: Moving Beyond Linearity
+# Conceptual Problems
+
 ## Problem 1
 The Cubic regression spline with a knot at $\xi$ has the form
 \[

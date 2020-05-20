@@ -1,4 +1,5 @@
-# Chapter Two Conceptual Problems
+# Chapter Two: Introduction
+# Conceptual Problems
 
 ## Problem One
 ### Part a)

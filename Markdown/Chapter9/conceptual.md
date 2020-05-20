@@ -1,4 +1,6 @@
-# Chapter 9 Conceptual Problems
+# Chapter Nine: Support Vector Machines
+# Conceptual Problems
+
 ## Problem One
 ### Part a)
 The Hyperplane $H_1 = 1 + 3X_1 - X_2 = 0$ is plotted below.

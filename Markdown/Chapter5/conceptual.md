@@ -1,4 +1,5 @@
-# Chapter Five Conceptual Problems
+# Chapter Five: Resampling Methods
+# Conceptual Problems
 
 ## Problem One
 Given a combination of variable $X$ with variance '$\sigma_{X}$ and $Y$ with variance '$\sigma_{Y}$. For a combination of these variables $\alpha X + (1-\alpha) Y$ find value of $\alpha$ which minimizes the total variance $Var$.
@@ -22,6 +23,45 @@ Minimizing this with respect to $\alpha$,
 \end{aligned}
 \]
 
+## Problem Two
+### Part a)
+It is easier to first ask, "What is the probability that the first observation in a bootstrap sample is the $j$th element of the original dataset". It is simply $1/n$ as there are $n$ independent choices.
+
+Therefore the probability that the $j$th element is *not* the first observation is $1 - 1/n$.
+
+### Part b)
+This is identical to part a) as the choices are independent.
+
+$1 - 1/n$.
+
+### Part c)
+Continuing on from the part a) and b) the probabilty of them both not being the $j$th observation is $(1 - 1/n)(1 - 1/n)$. Extrapolating this for the first $k$ observations of the bootstrap sample *not* being the $j$th point is
+
+\[
+p(x) = (1 - 1/n)^k
+\]
+
+Therefore, for the $j$th point not being in the entire bootstrap sample is $(1 - 1/n)^n$.
+
+### Part d)-f)
+The probability that the $j$th point *is* in the bootstrap sample is then,
+\[
+p(x) = 1 - (1 - 1/n)^n
+\]
+
+| n | p(x) |
+|---|------|
+| 5 | 0.67 |
+| 100 | 0.63 |
+| 10000   | 0.63  |
+
+### Part g)
+See the notebook in the scripts file for information on the following plot,
+
+<img src="../../Images/Chapter5/bootstrap_limit.png" alt="bootstrap_limit" title="bootstrap_limit"  />
+
+We have also plotted the a logarithmic scale to better show the leveling off affect.
+
 ## Problem 3: Validation Comparisons
 ### Part a)
 $k$-fold cross-validation consists of splitting the training data into $k$ separate sets.
@@ -36,3 +76,13 @@ The single validation set approach results in a single score on the valdation se
 
 #### ii.
 This is a subset of $k$-fold cross-validation where $k$ is the number of datapoints. It is highly computationally expensive for even a moderately sized dataset.
+
+## Problem Four
+We can use bootstrapping to resample the training set $k$ times and train the model on each bootstrapped sample and find the estimator $\hat{y}_i$.
+
+We could then calculate the standard deviation of the entire bootstrap set,
+
+\[
+\sigma = \sqrt{\dfrac{1}{k-1}\sum_{i=1}^k \left(\hat{y}_i - \bar{y}\right)^2} \\
+\text{Where, } \bar{y} = \dfrac{1}{k}\sum_{i=1}^{k}\hat{y}_i
+\]

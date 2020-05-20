@@ -1,4 +1,6 @@
-# Chapter Six Applied Problems
+# Chapter Six: Linear Model Selection and Regularization
+# Applied Problems
+
 ```python
 import pandas as pd
 import numpy as np

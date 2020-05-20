@@ -1,4 +1,5 @@
-# Chapter Six Conceptual Problems
+# Chapter Six: Linear Model Selection and Regularization
+# Conceptual Problems
 
 ## Problem One
 ### Part a)
@@ -29,6 +30,49 @@ The true statement is:
 The true statement is:
 
 > Less flexible and hence will give improved prediction accuracy when its increase in bias is less than its decrease in variance.
+
+## Problem Three
+This problem is related to the bias variance tradeoff. Therefore, we include the standard image of how the errors relate to model flexibility below,
+
+<img src='../Images/Chapter2/flexibility_plots.png' width='600'>
+
+### Part a) Training RSS
+*Decrease initially and level out.*
+
+As $s$ is inversely related to $\lambda$, lower values of $s$ correspond to a highly constrained (read inflexible) model. Therefore, as $s$ increases and there is more 'budget' for variance, the model becomes more flexible and model fits (and most likely will eventually overfit) the training data where the training error will level out.
+
+
+### Part b) Test RSS
+*Decrease initially, and then eventually start increasing in a 'U' shape.*
+
+This reflects the standard 'U' shape error due as a model flexibility increases (See chapter 2 for more details.)
+
+### Part c) Variance
+*Steadily increase*
+
+### Part d) Bias
+*Steadily decrease*
+
+### Part e) irredicle Error (Bayes Error)
+*Remains constant*
+
+## Problem Four
+This problem is very similar to problem four except the reverse. As $\lambda$ increases, the models become more constrained and less flexible with ridge regression ($l^2$ norm) rather than lasso. Therefore, without justification,
+
+### Part a) Training RSS
+*Increase Steadily*
+
+### Part b) Test RSS
+*Decrease initially, and then eventually start increasing in a 'U' shape.*
+
+### Part c) Variance
+*Steadily Decrease*
+
+### Part d) Bias
+*Steadily increase*
+
+### Part e) irredicle Error (Bayes Error)
+*Remains constant*
 
 ## Problem Five
 For this problem the number of data points is $n=2$ and the number of predictors is $p=2$. It also has the constraints:

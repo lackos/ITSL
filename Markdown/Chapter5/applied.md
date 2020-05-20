@@ -1,4 +1,6 @@
-# Chapter 5 Applied Problems
+# Chapter 5: Resampling Methods
+# Applied Problems
+
 ```python
 import pandas as pd
 import numpy as np

@@ -1,4 +1,5 @@
-# Chapter Three conceptual questions
+# Chapter Three: Linear Regression
+# Conceptual Problems
 
 ## Problem One
 The null hypothesis of this model can be stated as:

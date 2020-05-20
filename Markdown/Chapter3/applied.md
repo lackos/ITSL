@@ -1,4 +1,5 @@
-# Chapter Three Applied problems
+# Chapter Three: Linear Regression
+# Applied problems
 
 Load the Directories
 ```python

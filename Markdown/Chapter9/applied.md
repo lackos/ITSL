@@ -1,4 +1,6 @@
-# Chapter 9 Applied Problems
+# Chapter Nine: Support Vector Machines
+# Applied Problems
+
 Load in the standard libraries
 ```python
 import pandas as pd

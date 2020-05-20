@@ -1,4 +1,5 @@
-# Chapter Eight Applied Problems
+# Chapter Eight: Tree-Based Models
+# Applied Problems
 
 Load all the standard modules
 

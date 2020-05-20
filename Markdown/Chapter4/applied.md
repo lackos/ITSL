@@ -1,4 +1,6 @@
-# Chapter Four Applied Problems
+# Chapter Four: Classification
+# Applied Problems
+
 A complete python script for each problem can be found in the current folder.
 
 ```python
