@@ -5,8 +5,6 @@ import random
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from sklearn.metrics import confusion_matrix, classification_report, mean_squared_error
-from sklearn.model_selection import cross_validate, train_test_split
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
@@ -40,6 +38,7 @@ def part_b(data):
     ax1.set_title("Principal component plot of three distinct clusters")
 
     ax1.legend()
+    plt.savefig(os.path.join(IMAGE_DIR, "p10_partb_PCA.png"), dpi=500)
     plt.show()
 
     pass
@@ -111,12 +110,14 @@ def part_g(data):
     print("True Cluster 2 prdictions:")
     print(X[40:60])
 
+
 def main():
     ## Generate the data
     true_cluster_1 = np.random.normal(loc=-5, scale=0.5, size=(20,50))
     true_cluster_2 = np.random.normal(loc=10, scale=1, size=(20,50))
     true_cluster_3 = np.random.normal(loc=5, scale=0.9, size=(20,50))
 
+    ## Combine the data into a single array
     combined = np.append(true_cluster_1, np.append(true_cluster_2, true_cluster_3, axis=0), axis=0)
 
     # part_b(combined)

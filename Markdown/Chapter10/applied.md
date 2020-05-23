@@ -346,8 +346,8 @@ plt.show()
 
 <img src="../../Images/Chapter10/problem9_parta_dendogram.png" alt="bootstrap_limit" title="bootstrap_limit"  />
 
-### Part b)
-Cut the dendogram off at three distinct clusters.
+### Parts b) and c)
+For part b) we do not use the StandardScaler to scale the raw data. Cut the dendogram off at three distinct clusters.
 
 ```python
 hier_clusterer = AgglomerativeClustering(affinity='euclidean', compute_full_tree='auto', linkage='complete', distance_threshold=None, n_clusters=3)
@@ -357,76 +357,305 @@ hier_clusterer = hier_clusterer.fit(data)
 Return the clusters and reindex with the index dictionary
 
 ```python
-cluster_labels = {i: np.where(heir_clusterer.labels_ == i)[0] for i in range(heir_clusterer.n_clusters)}
+cluster_labels = {i: np.where(hier_clusterer.labels_ == i)[0] for i in range(hier_clusterer.n_clusters)}
 
+## Create a new dictionary to store named cluster
+state_dict = {}
 for c, state in cluster_labels.items():
+    ## reindex each luster
     state_clusters = [index_dict[st] for st in state]
-    print("Group ", c)
-    print("--------")
-    for st in state_clusters:
-        print(st)
-    print('\n')
+    ## Store in dictionary
+    state_dict[c] = state_clusters
+## Set as new dictionary
+non_scaled = state_dict
+```
+
+Similarly, for part c) we do the same process with the data prescaled,
+```python
+## Scale the data
+scaler = StandardScaler()
+scaler.fit(data[['Murder',  'Assault',  'UrbanPop',  'Rape']])
+data =  scaler.transform(data)
+
+## Train the clusterer
+hier_clusterer = AgglomerativeClustering(affinity='euclidean', compute_full_tree='auto', linkage='complete', distance_threshold=None, n_clusters=3)
+hier_clusterer = hier_clusterer.fit(data)
+
+cluster_labels = {i: np.where(hier_clusterer.labels_ == i)[0] for i in range(hier_clusterer.n_clusters)}
+
+## Create a new dictionary to store named cluster
+state_dict = {}
+for c, state in cluster_labels.items():
+    ## reindex each luster
+    state_clusters = [index_dict[st] for st in state]
+    ## Store in dictionary
+    state_dict[c] = state_clusters
+## Set as new dictionary
+scaled = state_dict
+```
+
+We can then compare these two clusters. Ideally this would be done on a map as it is geological data, I will update this with geopandas to demonstrate this. Here we will just compare the most similar clusters.
+
+We crudely define similarity by the number of common states in each cluster,
+
+```python
+## find most common clusters
+sim_dict = {}
+for key1, val1 in non_scaled.items():
+    sim_count = 0
+    for key2, val2 in scaled.items():
+        ## Count of common elements in list1 and list2
+        count = len(list(set(val1).intersection(val2)))
+        if count > sim_count and key2 not in sim_dict.values():
+            sim_count = count
+            sim_dict[key1] = key2
+```
+
+This is not the only way, or most sophisticated way to compare clusters. However as there is no 'true' cluster to learn from we can not be entirely sure.
+
+We can now generate a markdown table with this data.
+
+```python
+print("{} | {} ".format("Non-scaled", "Scaled"))
+print("---|----")
+for c, list1 in non_scaled.items():
+    print("Group {} | Group {} ".format(c, c))
+    list2 = scaled[sim_dict[c]]
+    for i in range(max(len(list1), len(list2))):
+        if i >= len(list1):
+            item1 = " "
+            item2 = list2[i]
+        elif i >= len(list2):
+            item1 = list1[i]
+            item2 = " "
+        else:
+            item1 = list1[i]
+            item2 = list2[i]
+        print("{} | {}".format(item1, item2))
+```
+
+
+Non-scaled | Scaled
+---|----
+**Group 1** | **Group 1**
+Alabama | Arizona
+Alaska | California
+Arizona | Colorado
+California | Florida
+Delaware | Illinois
+Florida | Maryland
+Illinois | Michigan
+Louisiana | Nevada
+Maryland | New Mexico
+Michigan | New York
+Mississippi | Texas
+Nevada |
+New Mexico |
+New York |
+North Carolina |
+South Carolina |
+**Group 2** | **Group 2**
+Connecticut | Arkansas
+Hawaii | Connecticut
+Idaho | Delaware
+Indiana | Hawaii
+Iowa | Idaho
+Kansas | Indiana
+Kentucky | Iowa
+Maine | Kansas
+Minnesota | Kentucky
+Montana | Maine
+Nebraska | Massachusetts
+New Hampshire | Minnesota
+North Dakota | Missouri
+Ohio | Montana
+Pennsylvania | Nebraska
+South Dakota | New Hampshire
+Utah | New Jersey
+Vermont | North Dakota
+West Virginia | Ohio
+Wisconsin | Oklahoma
+  | Oregon
+  | Pennsylvania
+  | Rhode Island
+  | South Dakota
+  | Utah
+  | Vermont
+  | Virginia
+  | Washington
+  | West Virginia
+  | Wisconsin
+  | Wyoming
+**Group 3** | **Group 3**
+Arkansas | Alabama
+Colorado | Alaska
+Georgia | Georgia
+Massachusetts | Louisiana
+Missouri | Mississippi
+New Jersey | North Carolina
+Oklahoma | South Carolina
+Oregon | Tennessee
+Rhode Island |
+Tennessee |
+Texas |
+Virginia |
+Washington |
+Wyoming |
+
+## Problem Ten
+### Part a)
+Generate the disparate cluster data with numpy
+
+```python
+## Generate the data
+true_cluster_1 = np.random.normal(loc=-5, scale=0.5, size=(20,50))
+true_cluster_2 = np.random.normal(loc=10, scale=1, size=(20,50))
+true_cluster_3 = np.random.normal(loc=5, scale=0.9, size=(20,50))
+
+## Combine the data into a single array
+combined = np.append(true_cluster_1, np.append(true_cluster_2, true_cluster_3, axis=0), axis=0)
+```
+
+### Part b)
+Train a PCA model and plot the resultant clusters. This is relatively simple as the data remains sorted in the transformed array,
+
+```python
+from sklearn.decomposition import PCA
+
+## Break the data into Principal components
+pca = PCA(n_components=2)
+pca.fit(data)
+
+X = pca.transform(data)
+
+fig, ax1 = plt.subplots(nrows=1, ncols=1, figsize=(12,12))
+sns.scatterplot(x=X[0:20,0], y=X[0:20,1], color='r', label='Cluster 1')
+sns.scatterplot(x=X[20:40,0], y=X[20:40,1], color='b', label="Cluster 2")
+sns.scatterplot(x=X[40:60,0], y=X[40:60,1], color='g', label="Cluster 3")
+
+ax1.set_xlabel("PC 1")
+ax1.set_ylabel("PC 2")
+
+ax1.set_title("Principal component plot of three distinct clusters")
+
+ax1.legend()
+plt.show()
+```
+
+<img src="../../Images/Chapter10/p10_partb_PCA.png" alt="bootstrap_limit" title="bootstrap_limit"  />
+
+### Part c)
+Now we train a Kmeans model with three cluster labels
+
+```python
+from sklearn.cluster import KMeans
+
+## Break the data into Principal components
+kmeans = KMeans(n_clusters=3)
+
+X = kmeans.fit_predict(data)
+print("True Cluster 0 prdictions:")
+print(X[0:20])
+print("True Cluster 1 prdictions:")
+print(X[20:40])
+print("True Cluster 2 prdictions:")
+print(X[40:60])
 ```
 
 ```
-Group  0
---------
-Arkansas
-Connecticut
-Delaware
-Hawaii
-Idaho
-Indiana
-Iowa
-Kansas
-Kentucky
-Maine
-Massachusetts
-Minnesota
-Missouri
-Montana
-Nebraska
-New Hampshire
-New Jersey
-North Dakota
-Ohio
-Oklahoma
-Oregon
-Pennsylvania
-Rhode Island
-South Dakota
-Utah
-Vermont
-Virginia
-Washington
-West Virginia
-Wisconsin
-Wyoming
-
-
-Group  1
---------
-Alabama
-Alaska
-Georgia
-Louisiana
-Mississippi
-North Carolina
-South Carolina
-Tennessee
-
-
-Group  2
---------
-Arizona
-California
-Colorado
-Florida
-Illinois
-Maryland
-Michigan
-Nevada
-New Mexico
-New York
-Texas
+True Cluster 0 prdictions:
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+True Cluster 1 prdictions:
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+True Cluster 2 prdictions:
+[2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2]
 ```
+
+We see that there is perfect recall of the true clusters. We can not produce a nice plot as in part b) as it is 50 dimensional.
+
+### Part d)
+For two clusters just set the above code `n_clusters = 2`
+
+```
+True Cluster 0 prdictions:
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+True Cluster 1 prdictions:
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+True Cluster 2 prdictions:
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+```
+
+Here it has clustered the first two clusters into one. This seems intuitive looking at the PCA plot as these two clusters are the most similar on the first two PCs.
+
+### Part e)
+For two clusters just set the above code `n_clusters = 4`
+
+```
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+True Cluster 1 prdictions:
+[3 3 0 0 0 3 3 0 0 0 0 0 3 0 0 0 3 3 0 0]
+True Cluster 2 prdictions:
+[2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2]
+```
+
+Setting the number of desired clusters as more than the true number measn that at least one will have to split up. Seeting $n=4$ meant that the second cluster was split. This is because it has the most variance compared to the other two clusteres.
+
+### Part f)
+First we preform PCA then cluster the data with KMeans,
+
+```python
+## Break the data into Principal components
+pca = PCA(n_components=2)
+pca.fit(data)
+X_PCA = pca.transform(data)
+
+kmeans = KMeans(n_clusters=3)
+X = kmeans.fit_predict(X_PCA)
+print("True Cluster 0 prdictions:")
+print(X[0:20])
+print("True Cluster 1 prdictions:")
+print(X[20:40])
+print("True Cluster 2 prdictions:")
+print(X[40:60])
+```
+
+```
+True Cluster 0 prdictions:
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+True Cluster 1 prdictions:
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+True Cluster 2 prdictions:
+[2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2]
+```
+
+As expected we get perfect clustering. This is definitely expected as we can see that the three clusters in the part a) plot are distinctly separate.
+
+### Part g)
+Now we see what happens to KMeans clustering when we scale the data first,
+
+```python
+## Break the data into Principal components
+scaler = StandardScaler(with_mean=False)
+scaler.fit(data)
+data =  scaler.transform(data)
+
+kmeans = KMeans(n_clusters=3)
+
+X = kmeans.fit_predict(data)
+print("True Cluster 0 prdictions:")
+print(X[0:20])
+print("True Cluster 1 prdictions:")
+print(X[20:40])
+print("True Cluster 2 prdictions:")
+print(X[40:60])
+```
+
+```
+True Cluster 0 prdictions:
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+True Cluster 1 prdictions:
+[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+True Cluster 2 prdictions:
+[2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2]
+```
+perfect recall again.
