@@ -51,21 +51,21 @@ False. The significance can only be determined with a statistic. The magnitude
  could change the order of magnitude of an estimator be any degree with a change
  of units.
 
- ## Problem Four
+## Problem Four
 This entire problem can be understood in the context of bias-variance tradeoff.
  ### Part a)
  *THe training RSS would be lower for the cubic model.* As the cubic model is more flexible than the linear model it will fit the training set better than the linear model.
 
- ### Part b)
+### Part b)
  *The test RSS will be lower for the linear model.* As the true relationship in linear the the flexible model will overfit the training data (higher variance) and perform poorly on the test set. Conversely, the linear model will have both low bias and variance and have a lower test RSS.
 
- ### Part c)
+### Part c)
 *THe training RSS would be lower for the cubic model.* This is for the same reasons as part a).
 
 ### Part d)
  *Cannot definitively say*. The high bias of the  linear model will result in a poor RSS if the relation is very non-linear and the cubic model will have a better fit. However, if the true relationship is close to linear the linear model may perform better due to the high variance of the cubic model.
 
- ## Problem Five
+## Problem Five
 
 Linear model with no intercept,
 \[
